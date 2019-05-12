@@ -22,7 +22,13 @@ class RouteModel : public Model {
         float h_value = std::numeric_limits<float>::max();
         float g_value = 0.0;
         bool visited = false;
-        std::vector<Node> *neighbors = nullptr;
+        std::vector<Node *> neighbors;
+
+        // calucalte distance between this node and other node 
+        float distance (const RouteModel::Node &other_node) const {
+            return std::sqrt(std::pow(this->x - other_node.x, 2) + std::pow(this->y - other_node.y, 2));
+        }
+
       private:
         // Add private Node variables and methods here.
         int index;
@@ -38,5 +44,6 @@ class RouteModel : public Model {
   private:
     // Add private RouteModel variables and methods here.
     std::vector<RouteModel::Node> m_Nodes;
-
+    std::unordered_map<int, std::vector<const Model::Road> > node_ro_road;
+    void CreateNodeToRoadHashmap(void);
 };
