@@ -9,8 +9,8 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
     end_y *= 0.01;
 
     // find closest point 
-    RouteModel::Node start_node = model.FindClosestNode(start_x, start_y);
-    RouteModel::Node end_node = model.FindClosestNode(end_x, end_y);
+    RouteModel::Node &start_node = model.FindClosestNode(start_x, start_y);
+    RouteModel::Node &end_node = model.FindClosestNode(end_x, end_y);
     this->m_Model = model;
     this->start_node = &start_node;
     this->end_node = &end_node;
@@ -25,7 +25,9 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
     std::vector<RouteModel::Node> path_found;
     while(current_node) {
         path_found.push_back(*current_node);
-        this->distance += current_node->distance(*current_node->parent);
+        if (current_node->parent){
+            this->distance += current_node->distance(*current_node->parent);
+        }
         current_node = current_node->parent;
     }
     this->distance *= this->m_Model.MetricScale();
@@ -75,6 +77,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *node) {
     // populate neighbors of the node
     node->FindNeighbors();
     for (auto &neighbor_node : node->neighbors) {
+        if (neighbor_node->visited == true) continue;
         neighbor_node->parent = node;
         neighbor_node->g_value = node->g_value + node->distance(*neighbor_node);
         neighbor_node->h_value = CalculateHValue(neighbor_node);

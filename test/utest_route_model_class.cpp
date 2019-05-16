@@ -49,5 +49,6 @@ class RouteModelTest : public ::testing::Test {
 TEST_F(RouteModelTest, RouteModelData) {
     EXPECT_EQ(model.path.size(), 0);
     EXPECT_EQ(model.Nodes().size(), 10754);
+    // constructor now will do a copy and create RouteModel::Node
     ASSERT_EQ(model.SNodes().size(), 10754);
 }

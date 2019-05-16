@@ -44,7 +44,7 @@ RouteModel::Node *RouteModel::Node::FindNeighbor(const std::vector<int> node_ind
      * @param node_indices: list of neighbor nodes
      * @erturn : pointer to the closest node of type RouteModel::Node
      */
-    auto nodes = this->parent_model->SNodes();
+    auto &nodes = this->parent_model->SNodes();
     float min_dist = std::numeric_limits<float>::max();
     RouteModel::Node *closest_node = nullptr;
     for (auto idx : node_indices) {
@@ -77,7 +77,7 @@ void RouteModel::Node::FindNeighbors(void) {
     }
 }
 
-RouteModel::Node const &RouteModel::FindClosestNode(float x, float y) {
+RouteModel::Node &RouteModel::FindClosestNode(float x, float y) {
     /**
      *  Find the closest Node to the given coordinates
      * @param x: x coordinate 
