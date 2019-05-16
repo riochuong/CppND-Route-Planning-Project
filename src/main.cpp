@@ -28,10 +28,10 @@ static std::optional<std::vector<std::byte>> ReadFile(const std::string &path)
 }
 
 void PromptForInput(float *start_x, float *start_y, float *end_x, float *end_y) {
-    int x0;
-    int x1;
-    int y0;
-    int y1;
+    float x0;
+    float x1;
+    float y0;
+    float y1;
     while(true) {
         std::cout << "Please input start x position in the range 0-100: ";
         if (std::cin >> x0 && x0 >= 0 && x0 <= 100) {
@@ -39,7 +39,8 @@ void PromptForInput(float *start_x, float *start_y, float *end_x, float *end_y) 
             break;
         }
         std::cin.clear();
-        std::cout << "Invalid input value " <<  std::endl;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid input value " << std::endl;
     }
     while(true) {
         std::cout << "Please input start y position in the range 0-100: ";
@@ -48,6 +49,7 @@ void PromptForInput(float *start_x, float *start_y, float *end_x, float *end_y) 
             break;
         }
         std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Invalid input value !!" << std::endl;
     }
     while(true) {
@@ -57,6 +59,7 @@ void PromptForInput(float *start_x, float *start_y, float *end_x, float *end_y) 
             break;
         }
         std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Invalid input value !!" << std::endl;
     }
     while(true) {
@@ -66,6 +69,7 @@ void PromptForInput(float *start_x, float *start_y, float *end_x, float *end_y) 
             break;
         }
         std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Invalid input value !!" << std::endl;
     }
 }
